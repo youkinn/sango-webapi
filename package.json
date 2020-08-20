@@ -11,7 +11,7 @@
     "start": "egg-scripts start --daemon --title=egg-server-sango-webapi",
     "stop": "egg-scripts stop --title=egg-server-sango-webapi",
     "dev": "egg-bin dev",
-    "debug": "egg-bin debug",
+    "debug": "egg-bin debug --port 9500",
     "test-local": "egg-bin test",
     "test": "npm run lint -- --fix && npm run test-local",
     "cov": "egg-bin cov",
@@ -23,7 +23,9 @@
   },
   "dependencies": {
     "egg": "^2.6.1",
-    "egg-scripts": "^2.6.0"
+    "egg-mongoose": "^3.3.0",
+    "egg-scripts": "^2.6.0",
+    "parameter": "^3.6.0"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.40",
@@ -49,7 +51,9 @@
     "type": "git",
     "url": ""
   },
-  "eslintIgnore": ["coverage"],
+  "eslintIgnore": [
+    "coverage"
+  ],
   "author": "hujiao",
   "license": "MIT"
 }

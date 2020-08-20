@@ -10,6 +10,15 @@ export default (appInfo: EggAppInfo) => {
   // add your egg config in here
   config.middleware = [];
 
+  config.mongoose = {
+    client: {
+      url: 'mongodb://127.0.0.1/test',
+      options: {},
+      // mongoose global plugins, expected a function or an array of function and options
+      // plugins: [createdPlugin, [updatedPlugin, pluginOptions]],
+    },
+  };
+
   // add your special config in here
   const bizConfig = {
     sourceUrl: `https://github.com/eggjs/examples/tree/master/${appInfo.name}`,

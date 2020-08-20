@@ -2,5 +2,10 @@
   "extends": "eslint-config-egg/typescript",
   "parserOptions": {
     "project": "./tsconfig.json"
+  },
+  "rules": {
+    "no-debugger": "off",
+    "comma-dangle": ["error", "only-multiline"],
+    "@typescript-eslint/no-var-requires": "off"
   }
 }

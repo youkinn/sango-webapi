@@ -1,6 +1,6 @@
-import { Controller } from 'egg';
+import BaseController from './Base';
 
-export default class HomeController extends Controller {
+export default class HomeController extends BaseController {
   public async index() {
     const { ctx } = this;
     ctx.body = await ctx.service.test.sayHi('egg');
