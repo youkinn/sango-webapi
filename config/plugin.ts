@@ -1,11 +1,10 @@
-import { EggPlugin } from 'egg';
-
-const plugin: EggPlugin = {
-  static: true,
-  nunjucks: {
+export default [
+  {
     enable: true,
-    package: 'egg-mongoose',
+    package: 'egg-mongoose'
   },
-};
-
-export default plugin;
+  {
+    enable: true,
+    package: 'egg-validate'
+  }
+];
