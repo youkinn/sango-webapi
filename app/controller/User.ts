@@ -5,7 +5,7 @@ export default class UserController extends BaseController {
     const result = await this.ctx.service.user.getUserList();
     this.success({
       count: 10,
-      results: result
+      results: result,
     });
   }
 
@@ -15,7 +15,6 @@ export default class UserController extends BaseController {
     const errors = app.validator.validate(
       {
         name: 'string',
-        age: 'number'
       },
       params
     );
