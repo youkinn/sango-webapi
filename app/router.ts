@@ -6,4 +6,6 @@ export default (app: Application) => {
   router.get('/', controller.home.index);
   router.get('/getUserList', controller.user.getUserList);
   router.post('/addUser', controller.user.addUser);
+  router.get('/getDictionaryList', controller.dictionary.getDictionaryList);
+  router.post('/addDictionary', controller.dictionary.addDictionary);
 };
