@@ -2,7 +2,9 @@ import BaseController from './Base';
 
 export default class UserController extends BaseController {
   public async getUserList() {
-    const result = await this.ctx.service.user.getUserList();
+    const { page, pageSize } = this.ctx.query;
+    const params = { page: +page, pageSize: +pageSize };
+    const result = await this.ctx.service.user.getUserList(params);
     this.success({
       count: 10,
       results: result,
