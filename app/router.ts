@@ -10,4 +10,8 @@ export default (app: Application) => {
   router.post('/api/v1/dictionary', controller.dictionary.createDictionary);
   router.patch('/api/v1/dictionary/:id', controller.dictionary.updateDictionary);
   router.delete('/api/v1/dictionary/:id', controller.dictionary.delDictionary);
+  router.get('/api/v1/dictionary/:dictionaryId/contents', controller.dictionary.getDictionaryContentList);
+  router.post('/api/v1/dictionary/:dictionaryId/content', controller.dictionary.addDictionaryContent);
+  router.patch('/api/v1/dictionary/:dictionaryId/content/:contentId', controller.dictionary.updateDictionaryContent);
+  router.delete('/api/v1/dictionary/:dictionaryId/content/:contentId', controller.dictionary.delDictionaryContent);
 };

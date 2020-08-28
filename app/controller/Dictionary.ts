@@ -19,7 +19,7 @@ export default class DictionaryController extends BaseController {
     if (pageSize) {
       pageSize = parseInt(pageSize);
     }
-    const [count, results] = await Promise.all([
+    const [ count, results ] = await Promise.all([
       this.ctx.service.dictionary.getDictionaryCount(params),
       this.ctx.service.dictionary.getDictionaryList(params, page, pageSize),
     ]);
@@ -78,5 +78,71 @@ export default class DictionaryController extends BaseController {
     }
     const result = await ctx.service.dictionary.delDictionary(_id);
     this.success(result);
+  }
+
+  public async getDictionaryContentList() {
+    const _id = this.ctx.params.dictionaryId;
+    const results = await this.ctx.service.dictionary.getDictionaryById(_id);
+    this.success({
+      count: results.content.length,
+      results: results.content,
+    });
+  }
+
+  public async addDictionaryContent() {
+    const { ctx, app } = this;
+    const params = ctx.request.body;
+    const errors = app.validator.validate(
+      {
+        code: 'string',
+        name: 'string',
+      },
+      params
+    );
+    if (errors) {
+      return this.validateFailed(errors);
+    }
+    const _id = this.ctx.params.dictionaryId;
+    await ctx.service.dictionary.addDictionaryContent(_id, params);
+    ctx.status = 200;
+    ctx.body = {
+      success: true,
+      message: '操作成功'
+    };
+  }
+
+  public async updateDictionaryContent() {
+    const { ctx, app } = this;
+    const params = ctx.request.body;
+    const errors = app.validator.validate(
+      {
+        code: 'string',
+        name: 'string',
+      },
+      params
+    );
+    if (errors) {
+      return this.validateFailed(errors);
+    }
+    const _id = this.ctx.params.dictionaryId;
+    const contentId = this.ctx.params.contentId;
+    await ctx.service.dictionary.updateDictionaryContent(_id, contentId, params);
+    ctx.status = 200;
+    ctx.body = {
+      success: true,
+      message: '操作成功'
+    };
+  }
+
+  public async delDictionaryContent() {
+    const { ctx } = this;
+    const _id = this.ctx.params.dictionaryId;
+    const contentId = this.ctx.params.contentId;
+    await this.ctx.service.dictionary.delDictionaryContent(_id, contentId);
+    ctx.status = 200;
+    ctx.body = {
+      success: true,
+      message: '操作成功'
+    };
   }
 }

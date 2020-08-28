@@ -1,10 +1,16 @@
 import { Service } from 'egg';
 
+interface DictionaryContentData {
+  code: string;
+  name: string;
+}
+
 interface DictionaryData {
   _id?: string;
   code: string;
   name: string;
   desc?: string;
+  content: DictionaryContentData[];
   creator_uid?: number;
   creator_name?: string;
   created_at: number;
@@ -28,6 +34,10 @@ export default class Dictionary extends Service {
     return await this.ctx.model.Dictionary.count(params);
   }
 
+  public async getDictionaryById(_id: string) {
+    return await this.ctx.model.Dictionary.findOne({ _id });
+  }
+
   public async addDictionary(params) {
     const preload: DictionaryData = params;
     const nowTime = new Date().getTime();
@@ -44,5 +54,28 @@ export default class Dictionary extends Service {
 
   public async delDictionary(_id: string) {
     return await this.ctx.model.Dictionary.findOneAndRemove({ _id });
+  }
+
+  public async addDictionaryContent(_id: string, params: DictionaryContentData) {
+    const result = await this.getDictionaryById(_id);
+    console.log(result, params);
+    result.content.push(params);
+    return await this.updateDictionary(_id, result);
+  }
+
+  public async updateDictionaryContent(_id: string, contentId: string, params: DictionaryContentData) {
+    const result = await this.getDictionaryById(_id);
+    const doc = result.content.id(contentId);
+    const index = result.content.indexOf(doc);
+    result.content.splice(index, 1, params);
+    return await this.updateDictionary(_id, result);
+  }
+
+  public async delDictionaryContent(_id: string, contentId: string) {
+    const result = await this.getDictionaryById(_id);
+    const doc = result.content.id(contentId);
+    const index = result.content.indexOf(doc);
+    result.content.splice(index, 1);
+    return await this.updateDictionary(_id, result);
   }
 }
