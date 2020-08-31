@@ -30,6 +30,10 @@ export default class Dictionary extends Service {
       .sort({ modified_at: -1 });
   }
 
+  public async checkDictionaryCodeExist(params: { code: string; _id: string }) {
+    return await this.getDictionaryCount({ code: params.code, _id: { $ne: params._id } });
+  }
+
   public async getDictionaryCount(params = {}) {
     return await this.ctx.model.Dictionary.count(params);
   }
@@ -63,7 +67,11 @@ export default class Dictionary extends Service {
     return await this.updateDictionary(_id, result);
   }
 
-  public async updateDictionaryContent(_id: string, contentId: string, params: DictionaryContentData) {
+  public async updateDictionaryContent(
+    _id: string,
+    contentId: string,
+    params: DictionaryContentData
+  ) {
     const result = await this.getDictionaryById(_id);
     const doc = result.content.id(contentId);
     const index = result.content.indexOf(doc);

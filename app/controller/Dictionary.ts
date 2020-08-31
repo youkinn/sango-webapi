@@ -29,6 +29,17 @@ export default class DictionaryController extends BaseController {
     });
   }
 
+  public async checkDictionaryExist() {
+    const { ctx } = this;
+    const { _id, code } = this.ctx.query;
+    const count = await this.ctx.service.dictionary.checkDictionaryCodeExist({ _id, code });
+    ctx.state = 200;
+    ctx.body = {
+      success: true,
+      data: count
+    };
+  }
+
   public async createDictionary() {
     const { ctx, app } = this;
     const params = ctx.request.body;
