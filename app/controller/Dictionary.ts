@@ -3,15 +3,14 @@ import BaseController from './Base';
 export default class DictionaryController extends BaseController {
   public async getDictionaryList() {
     let { page, pageSize } = this.ctx.query;
-    const { code, name } = this.ctx.query;
-    const params: { code?: string; name?: string } = {};
+    const { keyword } = this.ctx.query;
+    let params = {};
 
-    // todo：参数处理好恶心、待修改
-    if (code) {
-      params.code = code;
-    }
-    if (name) {
-      params.name = name;
+    if (keyword) {
+      const regexp = new RegExp(keyword, 'i');
+      params = {
+        $or: [{ code: { $regex: regexp } }, { name: { $regex: regexp } }],
+      };
     }
     if (page) {
       page = parseInt(page);
@@ -36,7 +35,7 @@ export default class DictionaryController extends BaseController {
     ctx.state = 200;
     ctx.body = {
       success: true,
-      data: count
+      data: count,
     };
   }
 
@@ -118,7 +117,7 @@ export default class DictionaryController extends BaseController {
     ctx.status = 200;
     ctx.body = {
       success: true,
-      message: '操作成功'
+      message: '操作成功',
     };
   }
 
@@ -141,7 +140,7 @@ export default class DictionaryController extends BaseController {
     ctx.status = 200;
     ctx.body = {
       success: true,
-      message: '操作成功'
+      message: '操作成功',
     };
   }
 
@@ -153,7 +152,7 @@ export default class DictionaryController extends BaseController {
     ctx.status = 200;
     ctx.body = {
       success: true,
-      message: '操作成功'
+      message: '操作成功',
     };
   }
 }
